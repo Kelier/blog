@@ -1,0 +1,27 @@
+{{ define "main" }}
+    <article class="fiction-list-page">
+        {{ partial "header.html" . }}
+        <div id="fiction-section">
+            <div class="fiction-welcome">
+                <div class="fiction-welcome-image invert-if-dark">
+                    <img src="/img/potted-skeleton.svg" />
+                </div>
+                <div class="fiction-welcome-content markdown-body">{{ with .Content }}{{ . }}{{ end }}</div>
+            </div>
+            <div class="fiction-list">
+                {{- $fictions := .Site.GetPage "section" "fictions" }}  <!-- 获取 "cards" 部分的内容 -->
+                {{- range $fictions.Pages }}
+                <div class="fiction-item" style="view-transition-name: post-{{ .File.UniqueID }}">
+                    <h2 class="fiction-item-title">
+                        <a href="{{ .Permalink }}">{{ .Title }}</a>
+                    </h2>
+                    <p class="fiction-item-meta">
+                        <time>{{ .Date.Format "2006-1-2" }}</time>
+                    </p>
+                </div>
+                {{- end }}
+            </div>
+        </div>
+    </article>
+    {{ partial "footer.html" . }}
+{{ end }}

@@ -1,0 +1,98 @@
+{{ define "main" }}
+    {{ partial "components/post-page-header.html" . }}
+    <article
+        class="post {{ .Site.Language.LanguageName }}"
+        id="article"
+    >
+      <!-- Post Header -->
+      <header
+        style="view-transition-name: post-{{ .File.UniqueID }}"
+        class="post-header"
+      >
+        {{ partial "components/banner.html" . }}
+        <!-- Title and Subtitle -->
+        <h1 class="post-title">
+          {{ .Title }}
+          {{ with .Params.subtitle }}
+            <small class="post-subtitle">{{ . }}</small>
+          {{ end }}
+        </h1>
+        <!-- Post Meta -->
+        <div class="post-meta">
+            {{ if .Date }}
+            <time class="post-date" datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">
+              {{ .Date.Format "2006-1-2" }}
+            </time>
+            {{ end }}
+            <span>·</span>
+            {{ if .Params.categories }}
+            <a class="post-category" href="/categories/{{ .Params.categories | urlize }}">{{ .Params.categories }}</a>
+            {{ end }}
+            {{ range .Params.tags }}
+            <a class="post-tag" href="{{ site.LanguagePrefix }}/tags/{{ lower . | urlize }}/">#{{ . }}</a>
+            {{ end }}
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <div id="post-content" class="post-content markdown-body"
+          style="view-transition-name: post-content-{{ .File.UniqueID }}">
+        {{ if .Params.toc }}
+        <div id="toc-container"><div id="toc"></div></div>
+        {{ end }}
+        {{ .Site.Params.postHeaderContent | safeHTML }}
+        {{ .Content }}
+        {{ if eq .Site.Language.Lang "zh" }}
+            <p style="font-size: 0.9rem">如果你觉得文章对你有帮助，可以考虑<a href="/sponsor">赞助作者</a></p>
+        {{ end }}
+      </div>
+
+      <!-- Comment -->
+      {{ partial "components/comment.html" . }}
+
+      <!-- Related Posts -->
+      {{ with site.RegularPages.Related . | first 3 }}
+      <div class="related-posts post-content">
+        <h4>{{ T "relatedContent" }}</h4>
+        <ul class="related-posts-list">
+        {{ range . }}
+            <li class="related-posts-item">
+                <a href="{{ .RelPermalink }}" data-umami-event="Click Related Post">
+                    {{ .LinkTitle }}
+                    {{ with .Params.subtitle }}
+                        <span class="related-post-subtitle">：{{ . }}</span>
+                    {{ end }}
+                </a>
+                <span class="related-post-reading-time">⏱️ {{ .ReadingTime }}min </span>
+            </li>
+        {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+
+      <!-- Post Bottom Navigation -->
+      <nav class="post-bottom-navigation">
+        <ul>
+            {{ if .NextInSection }}
+                <li><a href="{{ .NextInSection.RelPermalink }}" data-umami-event="Click Next Post">← {{ .NextInSection.Title }}</a></li>
+            {{ else }}<li class="placeholder"></li>{{ end }}
+            <li style="place-self: center;"><a href="{{ .Site.LanguagePrefix }}/">{{ T "backToHome" }}</a></li>
+            {{ if .PrevInSection }}
+                <li><a href="{{ .PrevInSection.RelPermalink }}" data-umami-event="Click Previous Post">{{ .PrevInSection.Title }} →</a></li>
+            {{ else }}<li class="placeholder"></li>{{ end }}
+        </ul>
+      </nav>
+
+      <script src="/js/tocbot.min.js"></script>
+      <script>
+      tocbot.init({
+        tocSelector: '#toc',
+        contentSelector: '#post-content',
+        headingSelector: 'h2, h3:not(blockquote > h3)',
+        hasInnerContainers: true,
+        scrollSmoothOffset: -30
+      });
+      </script>
+
+    </article>
+{{ end }}

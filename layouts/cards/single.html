@@ -1,0 +1,51 @@
+{{ define "main" }}
+    <article class="card-page">
+        <a href="{{ .Site.LanguagePrefix }}/cards"
+            class="title-image-container">
+            <img src="/header.png" alt="Logo"
+                class="invert-if-dark title-image"
+                style="view-transition-name: title-image"
+            />
+        </a>
+        <div class="card markdown-body post-content"
+            style="view-transition-name: card-{{ .File.UniqueID }}">
+            <div class="card-header">
+                <h3 class="card-title">{{ .Title }}</h3>
+                {{- if .Params.tags }}
+                    <p class="card-tags">
+                        {{- range .Params.tags }}
+                            <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="card-tag">#{{ . }}</a>
+                        {{- end }}
+                    </p>
+                {{- end }}
+            </div>
+            <div class="card-content">
+                {{ .Content }}
+            </div>
+        </div>
+
+        {{- /* 查询引用了这个卡片的文章 */ -}}
+        {{- $currentCard := .File.BaseFileName -}}  <!-- 获取当前卡片的文件名 -->
+        {{- $referencedBy := slice -}}  <!-- 初始化一个空数组 -->
+
+        {{- range .Site.Pages }}
+            {{- if and (isset .Params "related_cards") (in .Params.related_cards $currentCard) }}
+                {{- $referencedBy = $referencedBy | append . }}
+            {{- end }}
+        {{- end }}
+
+        {{- /* 如果有文章引用这个卡片，就显示它们 */ -}}
+        {{ if gt (len $referencedBy) 0 }}
+        <section class="related-posts post-content">
+            <h2>引用了本卡片的文章</h2>
+            <ul>
+                {{- range $referencedBy }}
+                    <li>
+                        <a href="{{ .Permalink }}">{{ .Title }}</a>
+                    </li>
+                {{- end }}
+            </ul>
+        </section>
+        {{ end }}
+    </article>
+{{ end }}

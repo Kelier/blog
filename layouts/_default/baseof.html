@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" prefix="og: http://ogp.me/ns#">
+  {{ partial "head.html" . }}
+  <body>
+    {{ partial "components/svg-filters.html" . }}
+    <main id="page">{{ block "main" . }}{{ end }}</main>
+    {{ partial "scripts.html" . }} {{ partial "components/global-search" . }} {{
+    if .Site.Params.extraBody }} {{ .Site.Params.extraBody | safeHTML }} {{ end
+    }}
+  </body>
+</html>

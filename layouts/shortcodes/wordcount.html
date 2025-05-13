@@ -1,0 +1,5 @@
+{{ $total := 0 }}
+{{ range where .Site.RegularPages "Section" "posts" }}
+  {{ $total = add $total .WordCount }}
+{{ end }}
+{{ $total }}

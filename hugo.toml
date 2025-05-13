@@ -1,0 +1,3 @@
+baseURL = 'https:/cdown.vercel.app/'
+languageCode = 'en-us'
+title = 'CDown Space'

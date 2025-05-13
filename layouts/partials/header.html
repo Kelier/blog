@@ -1,0 +1,30 @@
+<header id="site-header">
+  <!-- Header Title -->
+  <div class="header-title">
+    <img src="/header.png" alt="Logo"
+        class="invert-if-dark title-image"
+        style="view-transition-name: title-image"
+    />
+    <a class="title-link" href="{{ .Site.LanguagePrefix }}/"
+      >{{ .Site.Params.headTitle }}</a
+    >
+  </div>
+  <!-- Navigation -->
+  <div id="navigation-bar">
+      <nav class="navigation">
+        {{ range .Site.Params.nav }}
+        <div class="navigation-item {{ if strings.Contains $.Page.RelPermalink .link }}active{{ end }}">
+          <a href="{{ .link }}" target="{{ .target }}">{{ .name }}</a>
+        </div>
+        {{ end }}
+      </nav>
+
+      {{- $lang := .Site.Language.Lang -}}
+      {{- $switch := dict "en" (dict "url" "/zh/" "label" "切换至中文") "zh" (dict "url" "/en/" "label" "Switch to English") -}}
+      {{- $entry := index $switch $lang -}}
+      <a href="{{ $entry.url }}" data-umami-event="Switch Language"
+          class="no-swup" title="{{ $entry.label }}">
+        {{ partial "snippets/globe-icon" . }}
+      </a>
+  </div>
+</header>

@@ -1,0 +1,29 @@
+{{- $card := .Site.GetPage (printf "cards/%s" (.Get 0)) -}}
+{{- $hideHeader := .Get 1 | default "false" | lower -}}
+
+{{- if $card }}
+    <div class="card">
+        <a href="{{ $card.Permalink }}" class="card-corner"></a> <!-- 右上角折角 -->
+
+        {{- if ne $hideHeader "true" }}
+            <div class="card-header">
+                <h3 class="card-title">{{ $card.Title }}</h3>
+                {{- if $card.Params.tags }}
+                    <p class="card-tags">
+                        {{- range $card.Params.tags }}
+                            <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="card-tag">#{{ . }}</a>
+                        {{- end }}
+                    </p>
+                {{- end }}
+            </div>
+        {{- end }}
+
+        <div class="card-content">
+            {{- with $card.Content }}
+                {{ . }}
+            {{- end }}
+        </div>
+    </div>
+{{- else }}
+    <p style="color: red;">⚠️ 无法找到卡片: {{ .Get 0 }}</p>
+{{- end }}

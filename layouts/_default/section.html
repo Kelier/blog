@@ -1,0 +1,54 @@
+{{ define "main" }}
+    <article class="posts">
+      {{ partial "header.html" . }}
+      <div id="posts-archive" class="posts-list">
+        {{ partial "components/heatmap.html" . }}
+        <!-- Post Archive List -->
+        {{ $first := true }}  <!-- 在循环外定义一次 $first 变量 -->
+        {{ range (where site.RegularPages "Type" "eq" "posts").GroupByDate "2006" -}}
+          <section class="posts-year-archive">
+            <h1 class="posts-year-title">
+                {{ .Key }}
+                <small class="font-mono">{{ T "archivePage.postCountAnnual" (len .Pages) }}</small>
+            </h1>
+
+            {{ range .Pages.GroupByDate "January" }}  <!-- 这里每个月的循环 -->
+            <details class="posts-month-archive"{{ if $first }} open{{ end }}>
+                <summary>
+                    <h2 class="posts-month-title">
+                        {{ .Key }}
+                        <small class="font-mono">{{ T "archivePage.postCountMonthly" (len .Pages) }}</small>
+                    </h2>
+                </summary>
+                <div class="term-list">
+                    <ul class="term-list-posts">
+                      {{ range .Pages }}
+                        <li>
+                          <div style="display: flex; gap: 1rem;">
+                              <time class="font-mono">
+                                  {{ .Date.Format "Jan 06" }}
+                              </time>
+                              <a href="{{ .Permalink }}">
+                                  {{ .Title }}
+                              </a>
+                          </div>
+                          <div class="posts-item-category">
+                              {{ with .Params.categories }}
+                                  <a href="/categories/{{ . }}">
+                                      {{ . }}
+                                  </a>
+                              {{ end }}
+                          </div>
+                        </li>
+                      {{ end }}
+                    </ul>
+                </div>
+            </details>
+            {{ $first = false }} <!-- 将 $first 设置为 false 只在第一个月份显示后 -->
+            {{ end }}
+          </section>
+        {{ end }}
+      </div>
+    </article>
+    {{ partial "footer.html" . }}
+{{ end }}

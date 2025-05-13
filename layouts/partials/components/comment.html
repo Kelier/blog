@@ -1,0 +1,53 @@
+<div class="post-comments">
+    {{ with .Params.comments }}
+    <div class="static-comments">
+        <p class="static-comments-heading">{{ T "postPage.staticCommentsSectionHeader" }}</p>
+        {{ range . }}
+            <div class="static-comments-item">
+                <div class="static-comments-item-header">
+                <span class="comment-author">{{ .name }}</span>
+                <span class="comment-date font-mono">{{ .date }}</span>
+                </div>
+                <div class="static-comments-item-content">
+                    {{ .content | safeHTML }}
+                </div>
+                <div class="static-comments-item-footer">
+                    {{ with .source }}
+                    <p class="font-mono">{{ T "postPage.originallyPostedOn" . }}</p>
+                    {{ end }}
+                </div>
+            </div>
+        {{ end }}
+    </div>
+    {{ end }}
+    <div class="giscus">
+        <p style="text-align:center">
+            {{ T "postPage.commentNotLoaded" }}
+        </p>
+    </div>
+    {{ if eq .Site.Language.Lang "zh" }}
+    <p class="telegram-link-container">
+        <a href="https://t.me/teaparty418" target="_blank">
+            <img src="/img/telegram.svg" alt="Telegram Logo" />
+            加入本站的 Telegram 群组参与讨论
+        </a>
+    </p>
+    {{ end }}
+    <!-- giscus script -->
+    <script id="giscus-script"
+            src="https://giscus.app/client.js"
+            data-repo="{{ .Site.Params.giscus.repo }}"
+            data-repo-id="{{ .Site.Params.giscus.repoId }}"
+            data-category="{{ .Site.Params.giscus.category }}"
+            data-category-id="{{ .Site.Params.giscus.categoryId }}"
+            data-mapping="{{ .Site.Params.giscus.mapping }}"
+            data-strict="{{ .Site.Params.giscus.strict }}"
+            data-reactions-enabled="{{ .Site.Params.giscus.reactionsEnabled }}"
+            data-emit-metadata="{{ .Site.Params.giscus.emitMetadata }}"
+            data-input-position="{{ .Site.Params.giscus.inputPosition }}"
+            data-theme="{{ .Site.Params.giscus.theme }}"
+            data-lang="{{ T "lang" }}"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>

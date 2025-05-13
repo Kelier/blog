@@ -1,0 +1,28 @@
+{{- $books := where .Site.Pages "Section" "library" -}}
+{{- $book := index (where $books "File.BaseFileName" (.Get 0)) 0 -}}
+
+{{- if $book }}
+    <div class="markdown-body book-body">
+        <div class="book-cover">
+            <img class="no-fancybox" src="{{ $book.Params.cover }}" />
+        </div>
+        <h3 class="book-title">
+            <a href="{{ $book.Permalink }}">{{ $book.Title }}</a>
+        </h3>
+
+        {{- $rating := $book.Params.rating -}}
+        {{- $fullStars := math.Floor $rating -}}
+        <div class="rating">
+            <span>评分：</span>
+            {{- range seq $fullStars }}
+            <span class="star">★</span>
+            {{- end -}}
+        </div>
+
+        <div class="book-content">
+            {{ $book.Content }}
+        </div>
+    </div>
+{{- else }}
+    <p style="color: red;">⚠️ 无法找到书评: {{ .Get 0 }}</p>
+{{- end }}

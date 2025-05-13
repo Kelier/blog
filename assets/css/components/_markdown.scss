@@ -1,0 +1,144 @@
+// Variables (can be moved to a separate variables file if needed)
+$font-size: var(--content-font-size);
+$link-color: var(--link-color);
+$secondary-text-color: var(--secondary-text-color);
+$border-color: var(--border-color);
+$block-background-color: var(--block-background-color);
+$strong-text-color: #A94A4A;
+$em-text-color: #889E73;
+
+// Mixin for block styles
+@mixin block-style($margin, $padding, $color: null, $border-left: null) {
+  margin: $margin;
+  padding: $padding;
+  @if $color {
+    color: $color;
+  }
+  @if $border-left {
+    border-left: $border-left;
+  }
+}
+
+// Main styles
+.markdown-body {
+  font-size: $font-size;
+  max-width: 100%;
+
+  // Nested styles for child elements
+  a {
+    text-decoration: underline;
+    color: $link-color;
+  }
+
+  blockquote {
+    @include block-style(0, 0 1em, $secondary-text-color, 0.2em solid $border-color);
+    padding-right: 0;
+    &:not(blockquote > blockquote) {
+        @media screen and (min-width: 768px) {
+            margin-left: -1.4rem;
+        }
+    }
+  }
+
+  pre {
+    padding: 16px;
+    overflow: auto;
+    border-radius: 10px;
+  }
+
+  code {
+    padding: 0.2em 0.4em;
+    font-size: 85%;
+    background-color: $block-background-color;
+    border-radius: 6px;
+  }
+
+  pre > code {
+    padding: 0;
+    font-size: 100%;
+    background-color: inherit;
+    border: 0;
+  }
+
+  p {
+    hyphens: auto;
+    text-justify: ideographic;
+    margin-bottom: 1em;
+  }
+
+  strong {
+    color: $strong-text-color;
+  }
+
+  em {
+    color: $em-text-color;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+    margin-right: auto;
+    margin-top: 6px;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  figure figcaption h4 {
+    font-size: 0.9rem;
+    color: var(--secondary-text-color);
+    font-weight: 400;
+  }
+
+  ul {
+    list-style-type: square;
+  }
+
+  ul, ol {
+      padding-inline-start: 1.75rem;
+      li {
+          padding-left: 0.25rem;
+      }
+      ::marker {
+        color: var(--secondary-text-color);
+      }
+  }
+
+  mark {
+    background-color: rgba(255, 235, 0, .5)
+  }
+
+  .table-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+
+      table {
+          border-collapse: collapse;
+          table-layout: fixed;
+          min-width: 100%;
+          width: max-content;
+
+          border-top: 2px solid var(--border-color);
+
+          tr {
+              border-bottom: 1px solid var(--border-color);
+          }
+          td, th {
+              max-width: 200px;
+              padding: 0.5rem 1rem;
+              line-height: 1.5;
+              white-space: normal;
+              word-wrap: break-word;
+          }
+      }
+  }
+
+  del {
+      opacity: 0.5
+  }
+
+  iframe {
+      max-width: 100%;
+  }
+}

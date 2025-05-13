@@ -1,0 +1,49 @@
+.post-comments {
+    .static-comments {
+        margin: 2rem 0;
+        .static-comments-heading {
+            color: var(--secondary-text-color)
+        }
+        .static-comments-item {
+            font-size: 1.2rem;
+            border-bottom: 1px solid #ccc;
+            padding: 1rem 0.25rem;
+            .static-comments-item-header {
+                margin-bottom: 1rem;
+                display: flex;
+                justify-content: space-between;
+                .comment-author {
+                    font-weight: bold;
+                }
+                .comment-date {
+                    color: var(--secondary-text-color);
+                }
+            }
+            .static-comments-item-footer {
+                font-size: 1rem;
+                text-align: right;
+                color: var(--secondary-text-color);
+            }
+        }
+    }
+
+    .giscus {
+        margin: 1rem 0
+    }
+}
+
+.telegram-link-container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    a {
+        @include small-button;
+        font-size: .9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        img {
+            width: 1rem;
+        }
+    }
+}

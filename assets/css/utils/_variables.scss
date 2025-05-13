@@ -1,0 +1,53 @@
+:root {
+    /* colors */
+    --background-color: #f5f5f7;
+    --block-background-color: rgb(var(--block-background-color-rgb));
+    --block-background-color-rgb: 233, 232, 237;
+    --border-color: #d0d7de;
+    --text-color: #1d1d1f;
+    --secondary-text-color: #6e6e73;
+    --link-color: #277bd9;
+    --bright-background-color: #fafafa;
+
+    /* fonts */
+    --mono-font-family:
+        "Courier New", Courier, "Menlo", "Monaco", Consolas, "Liberation Mono",
+        "Lucida Console", monospace;
+    --serif-font-family: "Noto Serif", "Noto Serif SC", serif;
+    --content-font-size: 20px;
+
+    --page-width: 650px;
+    --page-margin-y: 5rem;
+
+    /* pagefind custom css */
+    --pagefind-ui-primary: var(--text-color);
+    --pagefind-ui-text: var(--text-color);
+    --pagefind-ui-background: var(--background-color);
+    --pagefind-ui-border: var(--border-color);
+    --pagefind-ui-tag: var(--border-color);
+}
+
+html[lang="en-US"] {
+    --serif-font-family: "Playfair Display", serif;
+}
+
+@mixin variablesInDarkMode {
+    --background-color: #1d2021;
+    --block-background-color: rgb(var(--block-background-color-rgb));
+    --block-background-color-rgb: 24, 26, 27;
+    --border-color: rgba(255, 255, 255, 0.2);
+    --text-color: #d2cec9;
+    --secondary-text-color: #a1998d;
+    --link-color: #277bd9;
+    --bright-background-color: #666;
+}
+
+.dark {
+    @include variablesInDarkMode;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        @include variablesInDarkMode;
+    }
+}

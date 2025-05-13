@@ -1,0 +1,60 @@
+{{ define "main" }}
+    <article class="posts termlist-page">
+        {{ partial "components/post-page-header.html" . }}
+        {{ partial "components/breadcrumbs.html" . }}
+
+        <div class="term-list">
+
+            <!-- Posts under this Term -->
+            <ul class="term-list-posts">
+                {{ range where .Pages "Section" "not in" (slice "cards" "library") }}
+                <li>
+                    <a href="{{ .RelPermalink }}" data-umami-event="Click Post Link from Category Page">
+                        {{ .Title }}{{ with .Params.subtitle }}：<span class="posts-subtitle">{{. }}</span>
+                        {{ end }}
+                    </a>
+                    <time>
+                        {{ .Date.Format "2006-1-2" }}
+                    </time>
+                </li>
+                {{ end }}
+            </ul>
+
+            <!-- Cards under this Term -->
+            {{ $cards := where .Pages "Section" "eq" "cards" }}
+            {{ if gt (len $cards) 0 }}
+            <h2>{{ T "termPage.cards" }}</h2>
+            <div class="term-list-cards cards-section outbox small">
+                {{ range $cards }}
+                <div class="card">
+                    <h3>
+                        <a href="{{ .RelPermalink }}" data-umami-event="Click Card Link from Category Page">
+                            {{ .Title }}
+                        </a>
+                    </h3>
+                    <p>{{ .Summary }}</p>
+                </div>
+                {{ end }}
+            </div>
+            {{ end }}
+
+            <!-- Books under this Term -->
+            {{ $books := where .Pages "Section" "eq" "library" }}
+            {{ if gt (len $books) 0 }}
+            <h2>{{ T "termPage.books" }}</h2>
+            <div class="book-group">
+                {{ range $books }}
+                <div class="book{{ if eq .Params.rating 1 }} badbook{{ end }}{{ if eq .Params.rating 5 }} goodbook{{ end }}">
+                    <a href="{{ .Permalink }}" class="book-cover" style="view-transition-name: book-{{ .Title }}">
+                        <img
+                            class="lazy" src="{{ .Params.cover }}"
+                            style="view-transition-name: book-{{ .File.UniqueID }}" />
+                    </a>
+                </div>
+                {{ end }}
+            </div>
+            {{ end }}
+        </div>
+    </article>
+    {{ partial "footer.html" . }}
+{{ end }}

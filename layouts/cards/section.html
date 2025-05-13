@@ -1,0 +1,50 @@
+{{ define "main" }}
+    <article class="card-list">
+        {{ partial "header.html" . }}
+        <div class="cards-statistics markdown-body">
+            <table>
+                <tr>
+                    <td>卡片数量</td>
+                    <td><span class="number-pill">{{ len .Pages }}</span></td>
+                </tr>
+            </table>
+        </div>
+        <div class="cards-section outbox small">
+            {{- $cards := .Site.GetPage "section" "cards" }}  <!-- 获取 "cards" 部分的内容 -->
+            {{- $paginator := .Paginate $cards.Pages 10 }}  <!-- 对该部分内容进行分页 -->
+            {{- range $paginator.Pages }}
+            <div class="card"
+                style="view-transition-name: card-{{ .File.UniqueID }}">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <a href="{{ .Permalink }}" class="card-title-link">{{ .Title }}</a>
+                    </h3>
+                    {{- if .Params.tags }}
+                        <p class="card-tags markdown-body">
+                            {{- range .Params.tags }}
+                                <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="card-tag">#{{ . }}</a>
+                            {{- end }}
+                        </p>
+                    {{- end }}
+                </div>
+
+                <div class="card-content markdown-body">
+                    {{ .Summary }}
+                </div>
+            </div>
+            {{- end }}
+        </div>
+
+        <!-- 分页导航 -->
+        <div class="pagination">
+            {{ if $paginator.HasPrev }}
+                <a href="{{ $paginator.Prev.URL }}" class="pagination-prev">👈</a>
+            {{ end }}
+            <div style="width:100%"></div>
+            {{ if $paginator.HasNext }}
+                <a href="{{ $paginator.Next.URL }}" class="pagination-next">👉</a>
+            {{ end }}
+        </div>
+    </article>
+    {{ partial "footer.html" . }}
+{{ end }}

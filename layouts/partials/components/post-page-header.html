@@ -1,0 +1,10 @@
+<header id="post-page-header"
+    class="{{ with .Params.banner }}with-banner{{ end }} {{ if eq .Section "fictions" }}fiction-page-header{{ end }}">
+    <a href="{{ .Site.LanguagePrefix }}/{{ if eq .Section "fictions" }}fictions{{ end }}"
+        class="title-image-container">
+        <img src="{{ if eq .Section "fictions" }}/img/potted-skeleton.svg{{ else }}/header.png{{ end }}" alt="Logo"
+            class="invert-if-dark title-image"
+            style="view-transition-name: title-image"
+        />
+    </a>
+</header>

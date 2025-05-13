@@ -1,0 +1,12 @@
+{{- $src := .Destination -}} {{- $alt := .Text | default "" -}} {{- $caption :=
+.Title | default "" -}}
+<figure>
+  <a href="{{ $src }}" data-fancybox data-caption="{{ $alt }}">
+    <img class="lazy" loading="lazy" src="{{ $src }}" alt="{{ $alt }}" />
+  </a>
+  {{- if $caption }}
+  <figcaption>
+    <h4>{{ $caption | markdownify }}</h4>
+  </figcaption>
+  {{- end }}
+</figure>

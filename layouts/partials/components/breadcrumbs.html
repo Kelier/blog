@@ -1,0 +1,35 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        {{ $currentPage := . }} {{ with $currentPage.Ancestors }} {{ range
+        .Reverse }}
+        <li class="breadcrumb-item">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+        {{ end }} {{ end }} {{ if or (ne $currentPage.Type "posts") (eq
+        $currentPage.Kind "section") }}
+        <li class="breadcrumb-item active" aria-current="page">
+            {{ $currentPage.Title }}
+        </li>
+        {{ end }}
+    </ol>
+</nav>
+
+<style>
+    ol.breadcrumb {
+        list-style-type: none;
+        display: flex;
+        padding-inline-start: 0;
+        font-family: var(--mono-font-family);
+
+        li {
+            &:not(:last-child) a {
+                &:hover { text-decoration: none; }
+                &::after {
+                    content: "/";
+                    color: var(--secondary-text-color);
+                    margin: 0 0.5rem;
+                }
+            }
+        }
+    }
+</style>

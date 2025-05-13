@@ -1,0 +1,25 @@
+lang: zh-CN
+archivePage:
+  postCountMonthly: '{{ . }} 篇文章'
+  postCountAnnual: '共计 {{ . }} 篇文章'
+postPage:
+  commentNotLoaded: 如果评论未加载，请尝试刷新页面
+  staticCommentsSectionHeader: 这些是曾经发布在不同评论平台上的评论，现在它们已经作为静态内容集成到页面中。
+  originallyPostedOn: '原本发表于 {{ . }}'
+footer:
+  wordCount: '🪦 {{ . }} 字在这里死去'
+  licenseStatement: '以 {{ . }} 协议授权'
+searchInstruction: '⌘+K 在任何地方搜索'
+postNav:
+  latest: '最新'
+  categories: '专栏'
+  tags: '标签'
+cards: 最近在学
+moreLinks:
+  posts: '所有文章'
+  cards: '所有卡片'
+relatedContent: '相关文章'
+backToHome: '返回首页'
+termPage:
+  cards: '相关卡片'
+  books: '我读过的相关书籍'

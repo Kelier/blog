@@ -1,0 +1,31 @@
+author: CDown
+mainSections:
+  - posts
+  - fictions
+  - library
+favicon: /favicon.png
+extraCSSFiles:
+  - /pagefind/pagefind-ui.css
+externalJSFIles:
+  - /js/littlefoot.js
+  - /pagefind/pagefind-ui.js
+footerExternalLinks:
+  - name: Back CDown's HomePage
+    link: https://cdown.vercel.app
+    icon: https://github.com/Kelier/picx-images-hosting/raw/master/----.5c1775v5mz.webp
+footerInternalLinks:
+  - name: blogroll
+    link: /blogroll/
+  - name: about
+    link: /about/
+giscus:
+  repo: BigCoke233/geek-death-project
+  repoId: R_kgDONPoyVw
+  category: General
+  categoryId: DIC_kwDONPoyV84Clumc
+  mapping: og:title
+  strict: 1
+  reactionsEnabled: 0
+  emitMetadata: 0
+  inputPosition: top
+  theme: "https://www.geedea.pro/css/giscus_noborder.css"

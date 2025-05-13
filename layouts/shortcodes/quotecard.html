@@ -1,0 +1,3 @@
+<div class="quote-card" {{ with .Get "rotate" }}style="transform: rotate({{. }}deg)"{{ end }}>
+    {{ .Inner | markdownify }}
+</div>

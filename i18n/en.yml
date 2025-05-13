@@ -1,0 +1,24 @@
+lang: en
+archivePage:
+  postCountMonthly: '{{ . }} POSTS'
+  postCountAnnual: '{{ . }} TOTAL POSTS'
+postPage:
+  commentNotLoaded: if comment is not loaded, please try refreshing
+  staticCommentsSectionHeader: These are static comments that are stored in frontmatter of this page. They used to be in different comment platforms, but now they are integrated into the page's content.
+  originallyPostedOn: 'originally posted on {{ . }}'
+footer:
+  wordCount: '🪦 {{ . }} words are buried here'
+  licenseStatement: 'Licensed under {{ . }}'
+searchInstruction: '⌘+K to search anywhere'
+postNav:
+  latest: 'Latest'
+  categories: 'Categories'
+  tags: 'Tags'
+moreLinks:
+  posts: 'All Posts'
+  cards: 'All Cards'
+relatedContent: 'Related Content'
+backToHome: 'Back To Home'
+termPage:
+  cards: 'Cards about this topic'
+  books: "Books I've read about this topic"

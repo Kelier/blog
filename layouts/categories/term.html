@@ -1,0 +1,30 @@
+{{ define "main" }}
+    <article class="posts termlist-page">
+        {{ partial "components/post-page-header.html" . }}
+        {{ partial "components/breadcrumbs.html" . }}
+
+        {{ with .Params.description }}
+            <div class="taxonomy-description markdown-body">
+                {{ . | markdownify }}
+                <hr />
+            </div>
+        {{ end }}
+
+        <div class="term-list">
+            <ul class="term-list-posts">
+                {{ range where .Pages "Section" "ne" "cards" }}
+                <li>
+                    <a href="{{ .RelPermalink }}" data-umami-event="Click Post Link from Category Page">
+                        {{ .Title }}{{ with .Params.subtitle }}：<span class="posts-subtitle">{{. }}</span>
+                        {{ end }}
+                    </a>
+                    <time>
+                        {{ .Date.Format "2006-1-2" }}
+                    </time>
+                </li>
+                {{ end }}
+            </ul>
+        </div>
+    </article>
+    {{ partial "footer.html" . }}
+{{ end }}

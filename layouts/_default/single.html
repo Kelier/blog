@@ -1,0 +1,30 @@
+{{ define "main" }}
+    {{ partial "header.html" . }}
+    <article
+        class="page {{ .Site.Language.LanguageName }}"
+        id="article"
+    >
+      <!-- Content -->
+      <div id="post-content" class="post-content markdown-body"
+          style="view-transition-name: post-content-{{ .File.UniqueID }}">
+        {{ if .Params.toc }}
+        <div id="toc-container"><div id="toc"></div></div>
+        {{ end }}
+        {{ .Site.Params.postHeaderContent | safeHTML }}
+        {{ .Content }}
+      </div>
+
+      <script src="/js/tocbot.min.js"></script>
+      <script>
+      tocbot.init({
+        tocSelector: '#toc',
+        contentSelector: '#post-content',
+        headingSelector: 'h2, h3:not(blockquote > h3)',
+        hasInnerContainers: true,
+        scrollSmoothOffset: -30
+      });
+      </script>
+
+    </article>
+    {{ partial "footer.html" . }}
+{{ end }}

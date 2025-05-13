@@ -1,0 +1,24 @@
+<!-- third-party libraries -->
+{{- range .Site.Params.externalJSFiles }}
+  <script src="{{ $.Site.Params.staticPrefix }}{{ . | relURL }}"></script>
+{{- end }}
+
+{{- $lazyload := resources.Get "js/lazyload.js" | minify }}
+{{- if $lazyload }}
+  <script>{{ $lazyload.Content | safeJS }}</script>
+{{- end }}
+
+{{- if or (in .Section "posts") (in .Section "cards") (in .Section "library") (eq .Type "single") }}
+  <script src="/js/fancybox.umd.js"></script>
+  {{- $fancybox := resources.Get "js/fancybox.js" | minify }}
+  {{- if $fancybox }}
+    <script>{{ $fancybox.Content | safeJS }}</script>
+  {{- end }}
+{{- end }}
+
+<script>
+  littlefoot.littlefoot({
+    dismissOnUnhover: true,
+    activateOnHover: true
+  });
+</script>

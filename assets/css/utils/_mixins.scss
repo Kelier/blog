@@ -1,0 +1,53 @@
+@mixin small-button {
+    background-color: var(--block-background-color);
+    padding: 0.2rem 0.5rem;
+    text-decoration: none;
+    border-radius: 0.2rem;
+    border: 1px solid var(--background-color);
+    transition: border-color 0.3s ease;
+    &:hover, .active & {
+        border: 1px solid var(--text-color);
+        text-decoration: none;
+    }
+}
+
+@mixin card {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    padding: 1rem 1.35rem;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    color: #333;
+    @media (prefers-color-scheme: dark) {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: #222;
+        color: #ddd;
+    }
+}
+
+@mixin bordered {
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+}
+
+@mixin framed {
+    border: 0.2rem solid #fff;
+    box-shadow: 0 0.1rem 0.75rem rgba(0,0,0,0.2);
+}
+
+@mixin postCategoryPill {
+    background-color: var(--block-background-color);
+    font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.2rem;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+@mixin roundSticker {
+    background-color: var(--block-background-color);
+    border-radius: 50%;
+    box-shadow: 0 0 0.2rem rgba(0,0,0,.2);
+    padding: 1rem;
+}

@@ -1,0 +1,32 @@
+<footer id="footer">
+    <section id="footer-copyright">
+        <p class="copyright">&copy; 2025-{{ now | dateFormat "2006" }} <a href="https://cdown.vercel.app" target="_blank">CDown</a></p>
+        <p class="license">{{ T "footer.licenseStatement" (printf "<a href=\"https://creativecommons.org/licenses/by-sa/4.0/\" target=\"_blank\">CC BY-SA 4.0</a>") | safeHTML }}</p>
+    </section>
+    <section id="footer-links">
+        <!-- Internal Links -->
+        <ul class="footer-navigation footer-navigation-internal">
+            {{ range .Site.Params.footerInternalLinks }}
+            <li><a href="{{ .link }}" title="{{ .name }}">{{ .name }}</a></li>
+            {{ end }}
+            <li>
+                {{ if eq .Site.Language.Lang "en" }}
+                <a href="/en/posts/index.xml" title="RSS (English)" target="_blank">
+                {{ else if eq .Site.Language.Lang "zh" }}
+                <a href="/cards/rss/" title="RSS (中文)">
+                {{ end }}
+                    RSS
+                </a>
+            </li>
+        </ul>
+
+        <!-- External Links -->
+        <ul class="footer-navigation">
+            {{ range .Site.Params.footerExternalLinks }}
+            <li><a href="{{ .link }}" title="{{ .name }}" target="_blank">
+                <img src="{{ .icon }}" />
+            </a></li>
+            {{ end }}
+        </ul>
+    </section>
+</footer>

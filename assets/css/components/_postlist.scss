@@ -1,0 +1,144 @@
+.index-section-morelink {
+    @include small-button;
+
+    &::after {
+        content: " →";
+    }
+}
+
+/* Post List Styles */
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+    .posts-item {
+        overflow: hidden;
+        width: 100%;
+        margin: 0.5rem 0;
+        header {
+            width: 100%;
+
+            @media screen and (min-width: 768px) {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .posts-item-meta {
+                time {
+                    color: var(--secondary-text-color);
+                    font-family: var(--mono-font-family);
+                }
+                .posts-item-title {
+                    filter: url(#xs);
+                    .posts-item-title-pill {
+                        font-size: 1rem;
+                        font-weight: normal;
+                        color: var(--secondary-text-color)
+                    }
+                }
+            }
+
+            .posts-item-category {
+                margin: 0.5rem 0;
+            }
+        }
+        .posts-item-summary {
+            h1, h2, h3, h4, h5, h6 {
+                display: none;
+            }
+            iframe {
+                margin: 1rem 0;
+            }
+            font-size: 1.1rem;
+        }
+
+        position: relative;
+        .posts-item-icon {
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0.25;
+            z-index: -1;
+            transform: rotateY(180deg) rotate(-25deg);
+            img {
+                width: 8rem;
+                height: 8rem;
+            }
+        }
+    }
+}
+
+#posts-list-navigation {
+    ul {
+        position: relative;
+        width: 100%;
+        padding-inline-start: 0;
+        display: flex;
+        list-style: none;
+        gap: 0.2rem;
+        li {
+            flex-shrink: 0;
+            flex-grow: 0;
+            &.active {
+                font-weight: bolder
+            }
+            a {
+                @include small-button;
+            }
+        }
+
+        #search-instruction {
+            font-size: 0.9rem;
+            color: var(--secondary-text-color);
+            margin-left: 0.5rem;
+
+        }
+
+        .list-decoration {
+            position: absolute;
+            right: 0;
+            img {
+                opacity: 0.55;
+                height: 2rem;
+                width: 2rem;
+            }
+        }
+    }
+}
+
+.term-list {
+    .term-list-posts {
+        &:not(ol) {
+            list-style: none;
+        }
+        padding-inline-start: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        li {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            time {
+                font-size: 0.9rem;
+                font-family: var(--mono-font-family);
+                color: var(--secondary-text-color);
+                flex-shrink: 0;
+            }
+            .posts-subtitle {
+                color: var(--secondary-text-color);
+            }
+        }
+    }
+}
+
+.taxonomy-description hr {
+    margin: 0.25rem 0;
+}
+
+.posts-item-category {
+    a {
+        @include postCategoryPill;
+    }
+}

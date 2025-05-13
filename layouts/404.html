@@ -1,0 +1,47 @@
+{{ define "main" }}
+    <style>
+    .page-404 {
+        position: relative;
+        height: calc(100dvh - var(--page-margin-y) * 2)
+    }
+    .page-404 .title-404 {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: 5rem;
+        font-style: italic;
+        filter: url(#x);
+        color: var(--secondary-text-color);
+        margin: 0;
+    }
+
+    .image-404 {
+        width: 10rem;
+        filter: url(#xs);
+        @media (prefers-color-scheme: dark) {
+            filter: url(#xs) invert(1);
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        .page-404 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5rem;
+        }
+        .image-404 {
+            width: 15rem;
+        }
+    }
+    </style>
+    <article class="page-404">
+        <img src="/img/ghost-window.svg" class="image-404" />
+        <div class="markdown-body">
+            <h1 class="title-404">404</h1>
+            <p>Windows 和幽灵偷走了你的页面</p>
+            <p>可恶的微软和能量体生物！</p>
+            <p><a href="/">Mac 和骷髅为你祈祷</a></p>
+        </div>
+    </article>
+{{ end }}

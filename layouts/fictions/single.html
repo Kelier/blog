@@ -1,0 +1,33 @@
+{{ define "main" }}
+    {{ partial "components/post-page-header.html" . }}
+    <article
+        class="post fiction-page {{ .Site.Language.LanguageName }}"
+        id="article"
+    >
+      <!-- Post Header -->
+      <header
+        style="view-transition-name: post-{{ .File.UniqueID }}"
+        class="post-header fiction-header"
+      >
+        {{ partial "components/banner.html" . }}
+        <h1 class="post-title">{{ .Title }}</h1>
+        <div class="post-meta">
+            {{ if .Date }}
+            <time class="post-date" datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">
+              {{ .Date.Format "2006-1-2" }}
+            </time>
+            {{ end }}
+        </div>
+      </header>
+
+      <!-- Post Content -->
+      <div id="post-content" class="post-content markdown-body"
+          style="view-transition-name: post-content-{{ .File.UniqueID }}">
+        {{ .Site.Params.postHeaderContent | safeHTML }}
+        {{ .Content }}
+      </div>
+
+      <!-- Comment -->
+      {{ partial "components/comment.html" . }}
+    </article>
+{{ end }}

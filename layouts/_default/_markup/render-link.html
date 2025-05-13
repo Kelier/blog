@@ -1,0 +1,8 @@
+{{ $url := .Destination | safeURL }} {{ if or (strings.HasPrefix $url "http://")
+(strings.HasPrefix $url "https://") }}
+<a href="{{ $url }}" target="_blank" rel="noopener noreferrer"
+  >{{ .Text | safeHTML }}</a
+>
+{{ else }}
+<a href="{{ $url }}">{{ .Text | safeHTML }}</a>
+{{ end }}

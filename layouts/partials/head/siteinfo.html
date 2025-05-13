@@ -1,0 +1,53 @@
+<!-- Link preview meta tags -->
+{{- $isHome := .IsHome -}}
+{{- $title := cond $isHome .Site.Title .Title -}}
+{{- $description := cond $isHome .Site.Params.description (default .Summary .Description | plainify) -}}
+{{- $ogType := cond $isHome "website" "article" -}}
+{{- $image := cond (isset .Params "banner") .Params.banner .Site.Params.favicon -}}
+
+<title>{{ $title }}</title>
+<link rel="canonical" href="{{ .Permalink }}" />
+<meta name="author" content="{{ .Params.author | default .Site.Params.author }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:title" content="{{ $title }}" />
+<meta property="og:type" content="{{ $ogType }}" />
+<meta property="og:description" content="{{ $description }}" />
+<meta name="description" content="{{ $description }}" />
+<meta property="og:locale" content="{{ .Site.LanguageCode }}" />
+<meta property="og:image" content="{{ $image }}" />
+
+<!-- RSS -->
+<link rel="alternate" type="application/atom+xml" href="{{.Site.BaseURL}}index.xml" title="{{ .Site.Title }}">
+<link href="{{ .Site.Params.staticPrefix }}{{ "index.xml" | relURL }}" rel="alternate" type="application/rss+xml"
+    title="{{ .Site.Title }}">
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "{{ .Site.BaseURL }}"
+        },
+        "articleSection" : "{{ .Section }}",
+        "name" : "{{ .Title }}",
+        "headline" : "{{ .Title }}",
+        {{ if .IsHome -}}
+        "description" : "{{ .Site.Params.description | plainify }}",
+        {{- else -}}
+        "description" : "{{ default .Summary .Description | plainify }}",
+        {{- end }}
+        "inLanguage" : "zh-CN",
+        "author" : "{{ .Params.author | default .Site.Params.author }}",
+        "creator" : "{{ .Params.author | default .Site.Params.author }}",
+        "publisher": "{{ .Params.author | default .Site.Params.author }}",
+        "accountablePerson" : "{{ .Params.author | default .Site.Params.author }}",
+        "copyrightHolder" : "{{ .Params.author | default .Site.Params.author }}",
+        "copyrightYear" : "{{ .Date.Format "2006" }}",
+        "datePublished": "{{ .Date }}",
+        "dateModified" : "{{ .Date }}",
+        "url" : "{{ .Permalink }}",
+        "keywords" : [ {{ if isset .Params "tags" }}{{ range .Params.tags }}"{{ . }}",{{ end }}{{ end }} ]
+    }
+</script>

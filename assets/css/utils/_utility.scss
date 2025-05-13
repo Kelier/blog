@@ -1,0 +1,65 @@
+.dark {
+    .invert-if-dark {
+        // filter: invert(1)
+        filter: invert(0.31) brightness(0.25) drop-shadow(4px 0.4px 0.2px #eee);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .invert-if-dark {
+        // filter: invert(1)
+        filter: invert(0.31) brightness(0.28) drop-shadow(4px 0.4px 0.2px #eee);
+    }
+}
+
+figure {
+    &.small {
+        width: 300px;
+    }
+    &.card {
+        width: fit-content;
+        img {
+            height: 18rem;
+        }
+    }
+    &.center {
+        margin: 0 auto;
+        figcaption {
+            text-align: center
+        }
+    }
+}
+
+.outbox {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: 10;
+  position: relative;
+
+  @media screen and (min-width: 768px) {
+    width: calc(var(--page-width) + 10rem);
+    margin: 0 -5rem;
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: calc(var(--page-width) + 20rem);
+    margin: 0 -10rem;
+  }
+
+  &.small {
+    @media screen and (min-width: 768px) {
+      width: calc(var(--page-width) + 4rem);
+      margin: 0 -2rem;
+    }
+
+    @media screen and (min-width: 1200px) {
+      width: calc(var(--page-width) + 10rem);
+      margin: 0 -5rem;
+    }
+  }
+}
+
+.font-mono {
+    font-family: var(--mono-font-family);
+}

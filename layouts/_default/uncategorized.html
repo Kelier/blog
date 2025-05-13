@@ -1,0 +1,29 @@
+{{ define "main" }}
+    <article class="posts termlist-page">
+        {{ partial "components/post-page-header.html" . }}
+        {{ partial "components/breadcrumbs.html" . }}
+        <div class="post-content markdown-body">
+            <p>{{ .Content }}</p>
+        </div>
+        <!-- Uncategorized -->
+        {{ $uncategorized := where (where .Site.RegularPages "Section" "posts") "Params.categories" "==" nil }}
+        {{ if $uncategorized }}
+        <section class="uncategorized-posts term-list">
+            <ol class="term-list-posts">
+                {{ range $uncategorized }}
+                <li>
+                    <a href="{{ .RelPermalink }}" data-umami-event="Click Post Link from Uncategorized">
+                        {{ .Title }}{{ with .Params.subtitle }}：<span class="posts-subtitle">{{. }}</span>
+                        {{ end }}
+                    </a>
+                    <time>
+                        {{ .Date.Format "2006-1-2" }}
+                    </time>
+                </li>
+                {{ end }}
+            </ol>
+        </section>
+        {{ end }}
+    </article>
+{{ partial "footer.html" . }}
+{{ end }}

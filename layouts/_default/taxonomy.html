@@ -1,0 +1,17 @@
+{{ define "main" }}
+<article class="taxonomy">
+  {{ partial "header.html" . }}
+  {{ partial "components/postnav.html" . }}
+
+  <!-- Display Tags -->
+  <section class="taxonomy-tags">
+    {{ range sort .Site.Taxonomies.tags "Count" "desc" }}
+    <a href="{{ .Page.RelPermalink }}" class="taxonomy-tags-item">
+        <span class="tag-name">#{{ .Page.LinkTitle }}</span>
+        <span class="tag-count">{{ .Count }}</span>
+    </a>
+    {{ end }}
+  </section>
+</article>
+{{ partial "footer.html" . }}
+{{ end }}

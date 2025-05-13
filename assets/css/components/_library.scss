@@ -1,0 +1,127 @@
+.book-group {
+    --gap: 1rem;
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    margin: 1rem 0;
+    flex-wrap: wrap;
+
+    .book {
+        --number-in-line: 4;
+        @media screen and (min-width: 768px) {
+            --number-in-line: 6;
+        }
+
+        width: calc(100% / var(--number-in-line) - var(--gap));
+        &.badbook {
+            opacity: 0.5;
+            z-index: 0;
+            a { position: relative; }
+            a::before {
+                position: absolute;
+                z-index: 1;
+                content: "";
+                top: 25%;
+                left: 25%;
+                height: 50%;
+                width: 50%;
+                background-image: url('/img/thumbs-down.png');
+                background-size: 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        }
+        &.goodbook {
+            .book-cover {
+                border-color: gold;
+                box-shadow: 0 0.1rem 0.75rem goldenrod;
+            }
+        }
+    }
+}
+
+.book-body {
+    line-height: 2;
+
+    hr {
+        clear: both
+    }
+
+    .book-footer {
+        font-size: 1rem;
+        color: var(--secondary-text-color);
+    }
+}
+
+#book-page {
+    --book-cover-width: 10rem;
+    @media screen and (min-width: 768px) {
+        --book-cover-width: 15rem;
+    }
+
+    .book-page-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+
+        p {
+            margin: 0;
+        }
+
+        .book-cover {
+            @include framed;
+            img {
+                width: var(--book-cover-width);
+            }
+        }
+
+        .book-title {
+            filter: url(#x)
+        }
+
+        position: relative;
+        .title-image-container {
+            --size: 5rem;
+            position: absolute;
+            top: 2rem;
+            right: calc(50% - var(--book-cover-width) / 2 - var(--size));
+            @include roundSticker;
+            width: var(--size);
+            height: var(--size);
+
+            .title-image {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.book-cover {
+    display: block;
+    img {
+        display: block;
+        width: 100%;
+    }
+
+    #library &, .termlist-page & {
+        @include framed;
+
+        transition: transform 0.3s ease;
+        transform: rotate(3deg);
+        &:hover {
+            transform: rotate(0) translateY(-0.5rem) scale(1.1)
+        }
+    }
+
+    #post-content & {
+        margin: 0 auto;
+        max-width: 50%;
+        @media screen and (min-width: 768px) {
+            display: inxwline-block;
+            float: left;
+            width: 12rem;
+            margin: 0 2rem 1.2rem 0;
+        }
+    }
+}

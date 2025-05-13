@@ -1,0 +1,88 @@
+<!-- Post Word-count Heatmap -->
+<div id="cal-heatmap-container">
+    <div id="cal-heatmap"></div>
+</div>
+
+<style>
+    .ch-container{display:block}.ch-container,.ch-domain,.ch-domain-container,.ch-domain-container-animation-wrapper{overflow:visible}.ch-domain-container.in-transition .ch-domain-container-animation-wrapper{overflow:hidden}.ch-domain-bg{fill:transparent}.ch-domain-text{fill:currentColor;font-size:10px}.ch-subdomain{overflow:visible}.ch-subdomain-bg{fill:#ededed}.ch-subdomain-bg.highlight{stroke:#444;stroke-width:1px}.ch-subdomain-bg:hover{stroke:#000;stroke-width:1px}.ch-subdomain-text{font-size:8px;pointer-events:none}[data-theme=dark] .ch-subdomain-bg{fill:#2d333b}[data-theme=dark] .ch-subdomain-bg.highlight{stroke:#768390}[data-theme=dark] .ch-subdomain-bg:hover{stroke:#636e7b}#ch-plugin-legend>svg{background:transparent;color:currentColor}#ch-tooltip{background:#222;border-radius:2px;box-shadow:2px 2px 2px rgba(0,0,0,.2);box-sizing:border-box;color:#bbb;display:none;font-size:12px;line-height:1.4;padding:5px 10px;text-align:center}#ch-tooltip[data-show]{display:block}#ch-tooltip-arrow,#ch-tooltip-arrow:before{background:inherit;height:8px;position:absolute;width:8px}#ch-tooltip-arrow{visibility:hidden}#ch-tooltip-arrow:before{content:"";transform:rotate(45deg);visibility:visible}#ch-tooltip[data-popper-placement^=top]>#ch-tooltip-arrow{bottom:-4px;margin-left:-4px}#ch-tooltip[data-popper-placement^=bottom]>#ch-tooltip-arrow{margin-left:-4px;top:-4px}#ch-tooltip[data-popper-placement^=left]>#ch-tooltip-arrow{right:-4px}#ch-tooltip[data-popper-placement^=right]>#ch-tooltip-arrow{left:-4px}#ch-tooltip[data-theme=dark]{background:#636e7b;color:#cdd9e5}    #cal-heatmap-container {
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+        justify-content: flex-end;
+        margin: 1rem 0;
+        min-height: 110px; /* Give it some height before loading */
+    }
+</style>
+
+<script>
+// Function to load the heatmap
+function loadHeatmap() {
+    // Load the required libraries dynamically
+    const d3Script = document.createElement('script');
+    d3Script.src = 'https://d3js.org/d3.v7.min.js';
+
+    const calScript = document.createElement('script');
+    calScript.src = 'https://unpkg.com/cal-heatmap/dist/cal-heatmap.min.js';
+
+    // Load cal-heatmap after d3 is loaded
+    d3Script.onload = function() {
+        document.head.appendChild(calScript);
+
+        calScript.onload = function() {
+            const CalHeatmap = window.CalHeatmap;
+            const cal = new CalHeatmap();
+
+            // Calculate the date 6 months ago
+            const startDate = new Date();
+            startDate.setMonth(startDate.getMonth() - 11);
+
+            // Render the heatmap
+            cal.paint({
+                domain: { type: 'month' },
+                subDomain: { type: 'day' },
+                scale: {
+                    color: {
+                        range: ['#eee', 'black'],
+                        type: 'linear',
+                        domain: [0, 6000],
+                    },
+                },
+                date: {
+                    timezone: 'Asia/Shanghai',
+                    start: startDate,
+                },
+                data: {
+                    source: '/cal-heatmap.json',
+                    x: d => new Date(d.date),
+                    y: d => d.value,
+                    defaultValue: 0,
+                },
+            });
+        };
+    };
+
+    document.head.appendChild(d3Script);
+}
+
+// Check if IntersectionObserver is supported
+if ('IntersectionObserver' in window) {
+    // Create an observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // If the element is in the viewport
+            if (entry.isIntersecting) {
+                loadHeatmap();
+                observer.unobserve(entry.target); // Stop observing after loading
+            }
+        });
+    }, {
+        rootMargin: '200px', // Load 200px before entering viewport
+    });
+
+    // Observe the container
+    observer.observe(document.getElementById('cal-heatmap-container'));
+} else {
+    // Fallback for browsers without IntersectionObserver
+    window.addEventListener('load', loadHeatmap);
+}
+</script>

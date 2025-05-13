@@ -1,0 +1,88 @@
+{{ define "main" }}
+<article class="taxonomy">
+  {{ partial "header.html" . }}
+  {{ partial "components/postnav.html" . }}
+
+  <!-- Series With Banners -->
+  {{ if eq .Site.Language.Lang "zh" }}
+    <div id="post-series">
+        <div id="post-series-list">
+            {{ range .Site.Params.series }}
+            <a class="post-series-item"
+                href="{{ .link }}"
+                title="{{ .description }}"
+                data-umami-event="Click series link from Banner"
+            >
+                <div class="post-series-cover">
+                    <img src="{{ .cover }}" />
+                </div>
+                <div class="post-series-text">
+                    <h3>{{ .name }}</h3>
+                </div>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+  {{ end }}
+
+  <!-- Display Categories -->
+    {{ $featured := slice "情报" "年终总结" "日志" }}
+    <h2>周期性刊物</h2>
+    <section class="taxonomy-categories">
+    {{ range sort .Site.Taxonomies.categories ".Count" "desc" }}
+    {{ if in $featured .Page.Title }}
+        <div class="taxonomy-categories-item">
+            <h3 class="category-title">
+                <a href="{{ .Page.RelPermalink }}">
+                    {{ with .Page.Params.icon }}<span>{{ . }}</span>{{ end }} {{ .Page.LinkTitle }}
+                </a>
+            </h3>
+            <p class="category-description">{{ .Page.Params.description | markdownify }}</p>
+            <ul class="category-articles">
+            {{ range first 6 .Pages }}
+                <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+            {{ end }}
+            </ul>
+            {{ if gt .Count 6 }}
+            <a class="category-link"
+                href="{{ .Page.RelPermalink }}"
+            >阅读所有 {{ .Count }} 篇文章</a>
+            {{ end }}
+        </div>
+    {{ end }}
+    {{ end }}
+    </section>
+
+    <!-- Render Other Categories -->
+    <h2>文章系列</h2>
+    <section class="taxonomy-categories">
+    {{ range sort .Site.Taxonomies.categories ".Count" "desc" }}
+    {{ if not (in $featured .Page.Title) }}
+        <div class="taxonomy-categories-item">
+            <h3 class="category-title">
+                <a href="{{ .Page.RelPermalink }}">
+                    {{ with .Page.Params.icon }}<span>{{ . }}</span>{{ end }} {{ .Page.LinkTitle }}
+                </a>
+            </h3>
+            <p class="category-description">{{ .Page.Params.description | markdownify }}</p>
+            <ul class="category-articles">
+            {{ range first 6 .Pages }}
+                <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+            {{ end }}
+            </ul>
+            {{ if gt .Count 6 }}
+            <a class="category-link"
+                href="{{ .Page.RelPermalink }}"
+            >阅读所有 {{ .Count }} 篇文章</a>
+            {{ end }}
+        </div>
+    {{ end }}
+    {{ end }}
+    </section>
+
+    <p class="uncategorized-link-container">
+        <a class="uncategorized-link" href="/categories/uncategorized/">查看随笔</a>
+    </p>
+</article>
+{{ partial "footer.html" . }}
+{{ end }}
